@@ -1,0 +1,51 @@
+<div class="page-title">
+    <h2>📋 {{#if isAdmin}}Todas as Receitas{{else}}Minhas Receitas{{/if}}</h2>
+    <a href="/receitaCreate" class="btn btn-primary">➕ Nova Receita</a>
+</div>
+
+{{#if receitas.length}}
+<table>
+    <thead>
+        <tr>
+            <th>Nome</th>
+            <th>Categorias</th>
+            <th>Responsáveis</th>
+            <th>Link</th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+        {{#each receitas}}
+        <tr>
+            <td><strong>{{nome}}</strong><br><small style="color:#666;">{{descricao}}</small></td>
+            <td>
+                {{#each categorias}}
+                <span class="badge">{{nome}}</span>
+                {{/each}}
+            </td>
+            <td>
+                {{#each responsaveis}}
+                <span class="badge">{{nome}}</span>
+                {{/each}}
+            </td>
+            <td>
+                {{#if linkExterno}}
+                <a href="{{linkExterno}}" target="_blank" class="btn btn-secondary" style="font-size:0.8rem;">🔗 Ver</a>
+                {{/if}}
+            </td>
+            <td>
+                <a href="/receitaUpdate/{{id}}" class="btn btn-secondary">✏️</a>
+                <a href="/receitaDelete/{{id}}" class="btn btn-danger"
+                   onclick="return confirm('Excluir a receita {{nome}}?')">🗑️</a>
+            </td>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>
+{{else}}
+<div class="card" style="text-align:center; color:#666;">
+    <p>Nenhuma receita cadastrada ainda.</p>
+    <br>
+    <a href="/receitaCreate" class="btn btn-primary">Cadastrar primeira receita</a>
+</div>
+{{/if}}
