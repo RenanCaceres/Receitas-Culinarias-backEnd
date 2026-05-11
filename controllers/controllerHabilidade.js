@@ -1,7 +1,21 @@
 const db = require('../config/db_sequelize');
-const path = require('path');
 
 module.exports = {
+    // ── Área pública ─────────────────────────────────────────────────────────
+
+    async getRelatorio(req, res) {
+        db.Habilidade.findAll()
+        .then(habilidades => {
+            res.render('publico/relatorioHabilidades', {
+                habilidades: habilidades.map(h => h.toJSON())
+            });
+        }).catch((err) => {
+            console.log(err);
+        });
+    },
+
+    // ── CRUD (admin) ─────────────────────────────────────────────────────────
+
     async getCreate(req, res) {
         res.render('habilidade/habilidadeCreate');
     },
@@ -18,7 +32,7 @@ module.exports = {
         db.Habilidade.findAll()
         .then(habilidades => {
             res.render('habilidade/habilidadeList', {
-                habilidades: habilidades.map(hab => hab.toJSON())
+                habilidades: habilidades.map(h => h.toJSON())
             });
         }).catch((err) => {
             console.log(err);
@@ -27,11 +41,10 @@ module.exports = {
 
     async getUpdate(req, res) {
         await db.Habilidade.findByPk(req.params.id)
-        .then(
-            habilidade => res.render('habilidade/habilidadeUpdate', {
-                habilidade: habilidade.dataValues
-            })
-        ).catch(function (err) {
+        .then(habilidade => res.render('habilidade/habilidadeUpdate', {
+            habilidade: habilidade.dataValues
+        }))
+        .catch(function (err) {
             console.log(err);
         });
     },
@@ -39,7 +52,7 @@ module.exports = {
     async postUpdate(req, res) {
         await db.Habilidade.update(req.body, {
             where: { id: req.body.id }
-        }).then(res.render('home'))
+        }).then(() => res.redirect('/home'))
         .catch(function (err) {
             console.log(err);
         });
@@ -48,7 +61,7 @@ module.exports = {
     async getDelete(req, res) {
         await db.Habilidade.destroy({
             where: { id: req.params.id }
-        }).then(res.render('home'))
+        }).then(() => res.redirect('/home'))
         .catch(err => {
             console.log(err);
         });

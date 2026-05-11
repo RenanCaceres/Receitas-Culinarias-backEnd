@@ -1,5 +1,4 @@
 const db = require('../config/db_sequelize');
-const path = require('path');
 
 module.exports = {
     async getCreate(req, res) {
@@ -27,11 +26,10 @@ module.exports = {
 
     async getUpdate(req, res) {
         await db.Categoria.findByPk(req.params.id)
-        .then(
-            categoria => res.render('categoria/categoriaUpdate', {
-                categoria: categoria.dataValues
-            })
-        ).catch(function (err) {
+        .then(categoria => res.render('categoria/categoriaUpdate', {
+            categoria: categoria.dataValues
+        }))
+        .catch(function (err) {
             console.log(err);
         });
     },
@@ -39,7 +37,7 @@ module.exports = {
     async postUpdate(req, res) {
         await db.Categoria.update(req.body, {
             where: { id: req.body.id }
-        }).then(res.render('home'))
+        }).then(() => res.redirect('/home'))
         .catch(function (err) {
             console.log(err);
         });
@@ -48,7 +46,7 @@ module.exports = {
     async getDelete(req, res) {
         await db.Categoria.destroy({
             where: { id: req.params.id }
-        }).then(res.render('home'))
+        }).then(() => res.redirect('/home'))
         .catch(err => {
             console.log(err);
         });

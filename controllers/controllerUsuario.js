@@ -1,5 +1,4 @@
 const db = require('../config/db_sequelize');
-const path = require('path');
 
 module.exports = {
     async getLogin(req, res) {
@@ -7,16 +6,16 @@ module.exports = {
     },
 
     async postLogin(req, res) {
-        db.Aluno.findAll({
+        db.Usuario.findAll({
             where: { login: req.body.login, senha: req.body.senha }
-        }).then(alunos => {
-            if (alunos.length > 0) {
-                req.session.login = req.body.login;
-                req.session.alunoId = alunos[0].dataValues.id;
-                req.session.tipo = alunos[0].dataValues.tipo;
-                res.locals.login = req.body.login;
+        }).then(usuarios => {
+            if (usuarios.length > 0) {
+                req.session.login    = req.body.login;
+                req.session.alunoId  = usuarios[0].dataValues.id;
+                req.session.tipo     = usuarios[0].dataValues.tipo;
+                res.locals.login     = req.body.login;
 
-                if (alunos[0].dataValues.tipo == 2) {
+                if (usuarios[0].dataValues.tipo == 1) {
                     res.locals.admin = true;
                 }
 
@@ -39,7 +38,7 @@ module.exports = {
     },
 
     async postCreate(req, res) {
-        db.Aluno.create(req.body).then(() => {
+        db.Usuario.create(req.body).then(() => {
             res.redirect('/home');
         }).catch((err) => {
             console.log(err);
@@ -47,9 +46,9 @@ module.exports = {
     },
 
     async getList(req, res) {
-        db.Aluno.findAll().then(alunos => {
+        db.Usuario.findAll().then(usuarios => {
             res.render('aluno/alunoList', {
-                alunos: alunos.map(aluno => aluno.toJSON())
+                alunos: usuarios.map(u => u.toJSON())
             });
         }).catch((err) => {
             console.log(err);
@@ -57,9 +56,9 @@ module.exports = {
     },
 
     async getUpdate(req, res) {
-        await db.Aluno.findByPk(req.params.id).then(
-            aluno => res.render('aluno/alunoUpdate', {
-                aluno: aluno.dataValues
+        await db.Usuario.findByPk(req.params.id).then(
+            usuario => res.render('aluno/alunoUpdate', {
+                aluno: usuario.dataValues
             })
         ).catch(function (err) {
             console.log(err);
@@ -67,20 +66,55 @@ module.exports = {
     },
 
     async postUpdate(req, res) {
-        await db.Aluno.update(req.body, {
+        await db.Usuario.update(req.body, {
             where: { id: req.body.id }
-        }).then(res.render('home'))
+        }).then(() => res.redirect('/home'))
         .catch(function (err) {
             console.log(err);
         });
     },
 
     async getDelete(req, res) {
-        await db.Aluno.destroy({
+        await db.Usuario.destroy({
             where: { id: req.params.id }
-        }).then(res.render('home'))
+        }).then(() => res.redirect('/home'))
         .catch(err => {
             console.log(err);
         });
+    },
+
+    // ── Habilidades do aluno logado ──────────────────────────────────────────
+
+    async getMinhasHabilidades(req, res) {
+        const habilidades = await db.Habilidade.findAll();
+        const usuario = await db.Usuario.findByPk(req.session.alunoId, {
+            include: [{ model: db.Habilidade, as: 'Habilidades' }]
+        }).catch(() => null);
+
+        res.render('aluno/minhasHabilidades', {
+            habilidades: habilidades.map(h => h.toJSON()),
+            minhasHabilidades: usuario ? usuario.Habilidades.map(h => h.toJSON()) : []
+        });
+    },
+
+    async postSalvarHabilidades(req, res) {
+        const alunoId     = req.session.alunoId;
+        const habilidades = req.body.habilidades || [];
+
+        // Remove todas as associações antigas e recria com os novos níveis
+        await db.AlunoHabilidade.destroy({ where: { usuarioId: alunoId } });
+
+        const registros = (Array.isArray(habilidades) ? habilidades : [habilidades])
+            .map(h => ({
+                usuarioId:    alunoId,
+                habilidadeId: h.id,
+                nivel:        h.nivel || 0
+            }));
+
+        if (registros.length > 0) {
+            await db.AlunoHabilidade.bulkCreate(registros);
+        }
+
+        res.redirect('/home');
     }
 };
