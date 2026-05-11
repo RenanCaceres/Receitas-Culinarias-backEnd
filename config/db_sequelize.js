@@ -1,10 +1,12 @@
+require('dotenv').config();
 const Sequelize = require('sequelize');
-const sequelize = new Sequelize('portifolio_receitas', 'postregres', '1234',
-    { host: 'localhost', dialect: 'postgres'});
 
-var db = {};
-db.Sequelize = Sequelize;
-db.sequelize = sequelize;
-db.Usuario = require('../models/relational/usuario.js') ( sequelize, Sequelize);
+const sequelize = new Sequelize('renan1008', 'postgres', '1234'{ host: 'localhost', dialect: 'postgres'});
 
-module.exports = db;
+    var db = {};
+    db.Sequelize = Sequelize;
+    db.sequelize = sequelize;
+    db.Usuario = require('.../models/relational/usuario.js') (sequelize, Sequelize);
+    db.Receita = require('.../models/relational/receita.js') (sequelize, Sequelize);
+    db.Categoria = require('.../models/relational/categoria.js') (sequelize, Sequelize);
+    db.Categoria.hasMany(db.Receita, { foreighKey: categoriaId, onDelete: 'NO ACTION'});
