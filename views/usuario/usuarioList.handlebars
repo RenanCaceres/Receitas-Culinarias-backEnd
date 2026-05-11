@@ -1,0 +1,26 @@
+<div class="page-title">
+    <h2>👥 Usuários</h2>
+    <a href="/usuarioCreate" class="btn btn-primary">➕ Novo Usuário</a>
+</div>
+<table>
+    <thead>
+        <tr>
+            <th>ID</th><th>Nome</th><th>Login</th><th>Tipo</th><th>Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+        {{#each usuarios}}
+        <tr>
+            <td>{{id}}</td>
+            <td>{{nome}}</td>
+            <td>{{login}}</td>
+            <td>{{#eq tipo 1}}Administrador{{else}}Aluno{{/eq}}</td>
+            <td>
+                <a href="/usuarioUpdate/{{id}}" class="btn btn-secondary">✏️ Editar</a>
+                <a href="/usuarioDelete/{{id}}" class="btn btn-danger"
+                   onclick="return confirm('Excluir usuário {{login}}?')">🗑️ Excluir</a>
+            </td>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>
