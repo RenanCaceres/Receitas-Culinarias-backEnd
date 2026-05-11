@@ -1,0 +1,14 @@
+<div class="page-title">
+    <h2>✏️ Editar Habilidade</h2>
+    <a href="/habilidadeList" class="btn btn-secondary">← Voltar</a>
+</div>
+<div class="card" style="max-width:500px;">
+    <form action="/habilidadeUpdate" method="post">
+        <input type="hidden" name="id" value="{{habilidade.id}}">
+        <div class="form-group">
+            <label>Nome da Habilidade</label>
+            <input type="text" name="nome" value="{{habilidade.nome}}" required>
+        </div>
+        <input type="submit" value="💾 Salvar" class="btn btn-primary">
+    </form>
+</div>
