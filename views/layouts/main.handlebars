@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfólio de Receitas</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: Arial, sans-serif; background: #f5f5f5; color: #333; }
+        header {
+            background: #c0392b; color: white; padding: 16px 32px;
+            display: flex; align-items: center; justify-content: space-between;
+        }
+        header h1 { font-size: 1.4rem; }
+        nav { display: flex; gap: 8px; flex-wrap: wrap; }
+        nav a button {
+            background: rgba(255,255,255,0.2); color: white;
+            border: 1px solid rgba(255,255,255,0.4); padding: 6px 12px;
+            cursor: pointer; border-radius: 4px; font-size: 0.85rem;
+        }
+        nav a button:hover { background: rgba(255,255,255,0.35); }
+        main { max-width: 1100px; margin: 32px auto; padding: 0 16px; }
+        .btn {
+            display: inline-block; padding: 8px 16px; border-radius: 4px;
+            cursor: pointer; font-size: 0.9rem; text-decoration: none; border: none;
+        }
+        .btn-primary   { background: #c0392b; color: white; }
+        .btn-secondary { background: #7f8c8d; color: white; }
+        .btn-danger    { background: #e74c3c; color: white; }
+        .btn-success   { background: #27ae60; color: white; }
+        .btn:hover { opacity: 0.85; }
+        table { width: 100%; border-collapse: collapse; background: white; border-radius: 6px; overflow: hidden; }
+        th { background: #c0392b; color: white; padding: 10px 12px; text-align: left; }
+        td { padding: 10px 12px; border-bottom: 1px solid #eee; }
+        tr:last-child td { border-bottom: none; }
+        tr:hover td { background: #fdf0ef; }
+        .form-group { margin-bottom: 16px; }
+        .form-group label { display: block; margin-bottom: 4px; font-weight: bold; }
+        .form-group input, .form-group textarea, .form-group select {
+            width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; font-size: 1rem;
+        }
+        .form-group textarea { height: 100px; }
+        .card { background: white; border-radius: 6px; padding: 24px; margin-bottom: 20px; box-shadow: 0 1px 4px rgba(0,0,0,0.08); }
+        .page-title { margin-bottom: 20px; display: flex; align-items: center; justify-content: space-between; }
+        .page-title h2 { font-size: 1.3rem; }
+        .badge { display: inline-block; padding: 2px 8px; border-radius: 12px; font-size: 0.75rem; background: #fdecea; color: #c0392b; margin: 2px; }
+        .alert-erro { background: #fdecea; color: #c0392b; padding: 10px 14px; border-radius: 4px; margin-bottom: 16px; }
+    </style>
+</head>
+<body>
+<header>
+    <h1>🍽️ Portfólio de Receitas</h1>
+    <nav>
+        <a href="/home"><button>🏠 Home</button></a>
+        <a href="/receitaList"><button>📋 Minhas Receitas</button></a>
+        <a href="/receitaCreate"><button>➕ Nova Receita</button></a>
+        <a href="/minhasHabilidades"><button>⭐ Minhas Habilidades</button></a>
+        {{#if isAdmin}}
+        <a href="/usuarioList"><button>👥 Usuários</button></a>
+        <a href="/categoriaList"><button>🏷️ Categorias</button></a>
+        <a href="/habilidadeList"><button>🎯 Habilidades</button></a>
+        {{/if}}
+        <a href="/logout"><button>🚪 Logout</button></a>
+    </nav>
+</header>
+<main>
+    {{{ body }}}
+</main>
+</body>
+</html>
