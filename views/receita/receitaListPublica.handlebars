@@ -1,0 +1,33 @@
+<div class="page-title">
+    <h2>🍽️ Portfólio de Receitas</h2>
+</div>
+
+{{#if receitas.length}}
+<div class="receita-grid">
+    {{#each receitas}}
+    <div class="card">
+        <h3 style="margin-bottom:8px; color:#c0392b;">{{nome}}</h3>
+        <p style="color:#555; margin-bottom:12px; font-size:0.95rem;">{{descricao}}</p>
+        <div style="margin-bottom:8px;">
+            {{#each categorias}}
+            <span class="badge">{{nome}}</span>
+            {{/each}}
+        </div>
+        <p style="font-size:0.85rem; color:#888;">
+            👨‍🍳
+            {{#each responsaveis}}
+            {{nome}}{{#unless @last}}, {{/unless}}
+            {{/each}}
+        </p>
+        {{#if linkExterno}}
+        <br>
+        <a href="{{linkExterno}}" target="_blank" class="btn btn-primary" style="font-size:0.85rem;">🔗 Ver receita completa</a>
+        {{/if}}
+    </div>
+    {{/each}}
+</div>
+{{else}}
+<div class="card" style="text-align:center; color:#666;">
+    <p>Nenhuma receita cadastrada ainda. Aguarde os alunos adicionarem suas criações!</p>
+</div>
+{{/if}}
