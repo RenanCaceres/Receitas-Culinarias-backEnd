@@ -1,0 +1,20 @@
+<div class="page-title">
+    <h2>🏷️ Categorias</h2>
+    <a href="/categoriaCreate" class="btn btn-primary">➕ Nova Categoria</a>
+</div>
+<table>
+    <thead><tr><th>ID</th><th>Nome</th><th>Ações</th></tr></thead>
+    <tbody>
+        {{#each categorias}}
+        <tr>
+            <td>{{id}}</td>
+            <td>{{nome}}</td>
+            <td>
+                <a href="/categoriaUpdate/{{id}}" class="btn btn-secondary">✏️ Editar</a>
+                <a href="/categoriaDelete/{{id}}" class="btn btn-danger"
+                   onclick="return confirm('Excluir categoria {{nome}}?')">🗑️ Excluir</a>
+            </td>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>
