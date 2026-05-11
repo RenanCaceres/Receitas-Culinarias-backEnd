@@ -1,7 +1,6 @@
-require('dotenv').config();
 const Sequelize = require('sequelize');
 
-const sequelize = new Sequelize('renan1008', 'postgres', '1234'{ host: 'localhost', dialect: 'postgres'});
+const sequelize = new Sequelize('portfolio_receitas', 'postgres', '1234'{ host: 'localhost', dialect: 'postgres'});
 
     var db = {};
     db.Sequelize = Sequelize;
