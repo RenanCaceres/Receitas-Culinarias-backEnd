@@ -4,8 +4,16 @@ module.exports = (sequelize, Sequelize) => {
             type: Sequelize.INTEGER, autoIncrement: true, allowNull: false, primaryKey: true
         },
 
+        tipo: {
+            type: Sequelize.ENUM('Aluno', 'Externo', 'Admin'), autoIncrement: false
+        },
+
         nome: {
             type: Sequelize.STRING, allowNull: false
+        },
+
+        idade: {
+            type: Sequelize.INTEGER, allowNull: false
         },
 
         curso: {
@@ -14,6 +22,14 @@ module.exports = (sequelize, Sequelize) => {
 
         RA: {
             type: Sequelize.INTEGER, allowNull: false
+        },
+
+        login: {
+            type: Sequelize.STRING, allowNull: false
+        },
+
+        senha: {
+            type: Sequelize.STRING, allowNull: false
         }
     });
     
