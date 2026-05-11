@@ -1,0 +1,42 @@
+<div class="page-title">
+    <h2>⭐ Minhas Habilidades Culinárias</h2>
+    <a href="/home" class="btn btn-secondary">← Voltar</a>
+</div>
+<div class="card">
+    <p style="margin-bottom:16px; color:#666;">Marque as habilidades que você possui e defina seu nível de 0 a 10.</p>
+    <form action="/minhasHabilidades" method="post">
+        <table>
+            <thead>
+                <tr><th>Habilidade</th><th>Tenho essa habilidade</th><th>Nível (0–10)</th></tr>
+            </thead>
+            <tbody>
+                {{#each todasHabilidades}}
+                <tr>
+                    <td>{{nome}}</td>
+                    <td style="text-align:center;">
+                        <input type="checkbox" name="habilidades[{{id}}]" value="{{id}}"
+                            {{#if selecionada}}checked{{/if}}
+                            onchange="toggleNivel(this, {{id}})">
+                    </td>
+                    <td>
+                        <input type="number" name="niveis[{{id}}]" id="nivel-{{id}}"
+                            min="0" max="10" value="{{nivel}}"
+                            style="width:70px;"
+                            {{#unless selecionada}}disabled{{/unless}}>
+                    </td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+        <br>
+        <input type="submit" value="💾 Salvar Habilidades" class="btn btn-primary">
+    </form>
+</div>
+
+<script>
+function toggleNivel(checkbox, id) {
+    const nivelInput = document.getElementById('nivel-' + id);
+    nivelInput.disabled = !checkbox.checked;
+    if (!checkbox.checked) nivelInput.value = 0;
+}
+</script>
