@@ -21,6 +21,7 @@
   "dependencies": {
     "express": "^5.2.1",
     "express-handlebars": "^9.0.1",
+    "express-session": "^1.18.1",
     "mongoose": "^9.6.2",
     "pg": "^8.20.0",
     "sequelize": "^6.37.8"
