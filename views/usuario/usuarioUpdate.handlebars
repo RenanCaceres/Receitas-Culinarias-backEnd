@@ -1,0 +1,29 @@
+<div class="page-title">
+    <h2>✏️ Editar Usuário</h2>
+    <a href="/usuarioList" class="btn btn-secondary">← Voltar</a>
+</div>
+<div class="card" style="max-width:500px;">
+    <form action="/usuarioUpdate" method="post">
+        <input type="hidden" name="id" value="{{usuario.id}}">
+        <div class="form-group">
+            <label>Nome completo</label>
+            <input type="text" name="nome" value="{{usuario.nome}}" required>
+        </div>
+        <div class="form-group">
+            <label>Login</label>
+            <input type="text" name="login" value="{{usuario.login}}" required>
+        </div>
+        <div class="form-group">
+            <label>Senha</label>
+            <input type="password" name="senha" value="{{usuario.senha}}" required>
+        </div>
+        <div class="form-group">
+            <label>Tipo</label>
+            <select name="tipo">
+                <option value="2" {{#eq usuario.tipo 2}}selected{{/eq}}>Aluno</option>
+                <option value="1" {{#eq usuario.tipo 1}}selected{{/eq}}>Administrador</option>
+            </select>
+        </div>
+        <input type="submit" value="Salvar" class="btn btn-primary">
+    </form>
+</div>
