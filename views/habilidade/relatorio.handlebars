@@ -1,0 +1,35 @@
+<div class="page-title">
+    <h2>📊 Relatório de Habilidades Culinárias</h2>
+</div>
+<p style="color:#666; margin-bottom:20px;">
+    Total de alunos cadastrados no sistema: <strong>{{totalAlunos}}</strong>
+</p>
+
+{{#if dados.length}}
+<div style="display:grid; gap:16px;">
+    {{#each dados}}
+    <div class="card">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+            <h3 style="color:#c0392b;">{{nome}}</h3>
+            <span style="font-size:0.95rem; color:#555;">
+                <strong>{{alunosComHabilidade}}</strong> de <strong>{{totalAlunos}}</strong> alunos
+                &nbsp;|&nbsp;
+                Nível médio: <strong>{{nivelMedio}}/10</strong>
+            </span>
+        </div>
+        <div style="display:flex; align-items:center; gap:12px;">
+            <div class="progress-bar" style="flex:1;">
+                <div class="progress-fill" style="width:{{proporcao}}%;"></div>
+            </div>
+            <span style="font-size:1.1rem; font-weight:bold; color:#c0392b; min-width:50px; text-align:right;">
+                {{proporcao}}%
+            </span>
+        </div>
+    </div>
+    {{/each}}
+</div>
+{{else}}
+<div class="card" style="text-align:center; color:#666;">
+    <p>Nenhuma habilidade cadastrada ainda.</p>
+</div>
+{{/if}}
