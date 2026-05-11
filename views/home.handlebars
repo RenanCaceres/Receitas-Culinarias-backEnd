@@ -1,0 +1,11 @@
+<div class="card">
+    <h2>👋 Bem-vindo, {{usuarioLogin}}!</h2>
+    <br>
+    <p>Use o menu acima para navegar pelo sistema.</p>
+    <br>
+    {{#if isAdmin}}
+    <p><strong>Você está logado como administrador.</strong> Você tem acesso ao gerenciamento de usuários, categorias e habilidades.</p>
+    {{else}}
+    <p>Você pode cadastrar e gerenciar suas receitas e habilidades culinárias.</p>
+    {{/if}}
+</div>
