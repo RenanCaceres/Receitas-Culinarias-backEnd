@@ -1,0 +1,22 @@
+<div class="page-title">
+    <h2>🎯 Habilidades Culinárias</h2>
+    <a href="/habilidadeCreate" class="btn btn-primary">➕ Nova Habilidade</a>
+</div>
+<table>
+    <thead>
+        <tr><th>ID</th><th>Nome</th><th>Ações</th></tr>
+    </thead>
+    <tbody>
+        {{#each habilidades}}
+        <tr>
+            <td>{{id}}</td>
+            <td>{{nome}}</td>
+            <td>
+                <a href="/habilidadeUpdate/{{id}}" class="btn btn-secondary">✏️ Editar</a>
+                <a href="/habilidadeDelete/{{id}}" class="btn btn-danger"
+                   onclick="return confirm('Excluir habilidade {{nome}}?')">🗑️ Excluir</a>
+            </td>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>
