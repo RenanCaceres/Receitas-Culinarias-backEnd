@@ -9,13 +9,13 @@
         <h3 style="margin-bottom:8px; color:#c0392b;">{{nome}}</h3>
         <p style="color:#555; margin-bottom:12px; font-size:0.95rem;">{{descricao}}</p>
         <div style="margin-bottom:8px;">
-            {{#each categorias}}
+            {{#each Categorias}}
             <span class="badge">{{nome}}</span>
             {{/each}}
         </div>
         <p style="font-size:0.85rem; color:#888;">
             👨‍🍳
-            {{#each responsaveis}}
+            {{#each Responsaveis}}
             {{nome}}{{#unless @last}}, {{/unless}}
             {{/each}}
         </p>

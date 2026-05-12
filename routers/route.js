@@ -1,89 +1,145 @@
-// routers/route.js
-const express              = require('express');
-const db                   = require('../config/db_sequelize');
-const controllerUsuario    = require('../controllers/controllerUsuario');
-const controllerReceita    = require('../controllers/controllerReceita');
-const controllerCategoria  = require('../controllers/controllerCategoria');
+const express = require('express');
+const db = require('../config/db_sequelize');
+
+const middlewares = require('../middlewares/middlewares');
+
+const controllerUsuario = require('../controllers/controllerUsuario');
+const controllerReceita = require('../controllers/controllerReceita');
+const controllerCategoria = require('../controllers/controllerCategoria');
 const controllerHabilidade = require('../controllers/controllerHabilidade');
 const controllerComentario = require('../controllers/controllerComentario');
 
 const route = express.Router();
 
-// ── Criação do banco (descomentar apenas UMA vez, depois comentar novamente) ──
+// CRIA O BANCO E O ADMIN INICIAL
 /*
-db.sequelize.sync({ force: true }).then(() => {
+db.sequelize.sync({ force: false }).then(async () => {
     console.log('Banco criado!');
-    db.Usuario.create({ login: 'admin', senha: '1234', tipo: 1, nome: 'Administrador' });
+
+    await db.Usuario.create({
+        login: 'admin',
+        senha: '1234',
+        tipo: 1,
+        nome: 'Administrador'
+    });
+
+    await db.Usuario.create({
+    login: 'renan',
+    senha: '1234',
+    tipo: 0,
+    nome: 'Aluno'
+    });
+
+        const categoria1 = await db.Categoria.create({
+        nome: 'Massas'
+    });
+
+    const categoria2 = await db.Categoria.create({
+        nome: 'Sobremesas'
+    });
+
+    const categoria3 = await db.Categoria.create({
+        nome: 'Salgados'
+    });
+
+    const habilidade1 = await db.Habilidade.create({
+        nome: 'Corte de legumes'
+    });
+
+    const habilidade2 = await db.Habilidade.create({
+        nome: 'Preparo de massas'
+    });
+
+    const habilidade3 = await db.Habilidade.create({
+        nome: 'Confeitaria'
+    });
+
+    const receita1 = await db.Receita.create({
+        nome: 'Macarrão ao Alho e Óleo',
+        descricao: 'Receita simples e rápida de macarrão.',
+        ingredientes: 'Macarrão, alho, óleo, sal e cheiro-verde.',
+        preparo: 'Cozinhe o macarrão. Refogue o alho no óleo e misture tudo.',
+        linkExterno: 'https://www.tudogostoso.com.br/'
+    });
+
+    const receita2 = await db.Receita.create({
+        nome: 'Bolo de Chocolate',
+        descricao: 'Bolo simples de chocolate.',
+        ingredientes: 'Farinha, açúcar, ovos, leite, chocolate em pó e fermento.',
+        preparo: 'Misture os ingredientes, coloque em uma forma e asse.',
+        linkExterno: 'https://www.tudogostoso.com.br/'
+    });
+
+    const receita3 = await db.Receita.create({
+        nome: 'Pão de Queijo',
+        descricao: 'Receita tradicional de pão de queijo.',
+        ingredientes: 'Polvilho, queijo, leite, óleo, ovos e sal.',
+        preparo: 'Misture os ingredientes, faça bolinhas e asse.',
+        linkExterno: 'https://www.tudogostoso.com.br/'
+    });
 });
 */
 
-module.exports = route;
+// PÁGINA INICIAL DIRETO NAS RECEITAS
+route.get('/', (req, res) => {
+    res.redirect('/receitasPublicas');
+});
 
-// ─────────────────────────────────────────────────────────────────────────────
-// ROTAS PÚBLICAS (sem login) — liberadas no middleware sessionControl
-// ─────────────────────────────────────────────────────────────────────────────
-
-route.get('/', controllerUsuario.getLogin);
+// LOGIN
+route.get('/login', controllerUsuario.getLogin);
 route.post('/login', controllerUsuario.postLogin);
 route.get('/logout', controllerUsuario.getLogout);
 
+// PÚBLICO
 route.get('/receitasPublicas', controllerReceita.getListPublica);
 route.get('/receitasPorCategoria', controllerReceita.getListPorCategoria);
 route.get('/receitasPorCategoria/:categoriaId', controllerReceita.getListPorCategoria);
 route.get('/relatorioHabilidades', controllerHabilidade.getRelatorio);
 
-// ─────────────────────────────────────────────────────────────────────────────
-// ÁREA LOGADA (sessão controlada pelo middleware sessionControl do app.js)
-// ─────────────────────────────────────────────────────────────────────────────
-
+// HOME
 route.get('/home', (req, res) => {
     res.render('home');
 });
 
-// ── Receitas ─────────────────────────────────────────────────────────────────
+// RECEITAS
+route.get('/receitaList', controllerReceita.getList);
+route.get('/receitaCreate', controllerReceita.getCreate);
+route.post('/receitaCreate', controllerReceita.postCreate);
+route.get('/receitaUpdate/:id', controllerReceita.getUpdate);
+route.post('/receitaUpdate', controllerReceita.postUpdate);
+route.get('/receitaDelete/:id', controllerReceita.getDelete);
 
-route.get('/receitaList',         controllerReceita.getList);
-route.get('/receitaCreate',       controllerReceita.getCreate);
-route.post('/receitaCreate',      controllerReceita.postCreate);
-route.get('/receitaUpdate/:id',   controllerReceita.getUpdate);
-route.post('/receitaUpdate',      controllerReceita.postUpdate);
-route.get('/receitaDelete/:id',   controllerReceita.getDelete);
+// MINHAS HABILIDADES
+route.get('/minhasHabilidades', controllerUsuario.getMinhasHabilidades);
+route.post('/minhasHabilidades', controllerUsuario.postSalvarHabilidades);
 
-// ── Habilidades do aluno logado ──────────────────────────────────────────────
+// COMENTÁRIOS
+route.get('/comentarioCreate', controllerComentario.getCreate);
+route.post('/comentarioCreate', controllerComentario.postCreate);
+route.get('/comentarioList', controllerComentario.getList);
 
-route.get('/minhasHabilidades',   controllerUsuario.getMinhasHabilidades);
-route.post('/minhasHabilidades',  controllerUsuario.postSalvarHabilidades);
+// ADMIN - USUÁRIOS
+route.get('/usuarioList', middlewares.adminControl, controllerUsuario.getList);
+route.get('/usuarioCreate', middlewares.adminControl, controllerUsuario.getCreate);
+route.post('/usuarioCreate', middlewares.adminControl, controllerUsuario.postCreate);
+route.get('/usuarioUpdate/:id', middlewares.adminControl, controllerUsuario.getUpdate);
+route.post('/usuarioUpdate', middlewares.adminControl, controllerUsuario.postUpdate);
+route.get('/usuarioDelete/:id', middlewares.adminControl, controllerUsuario.getDelete);
 
-// ── Comentários (persistidos no MongoDB) ─────────────────────────────────────
+// ADMIN - CATEGORIAS
+route.get('/categoriaList', middlewares.adminControl, controllerCategoria.getList);
+route.get('/categoriaCreate', middlewares.adminControl, controllerCategoria.getCreate);
+route.post('/categoriaCreate', middlewares.adminControl, controllerCategoria.postCreate);
+route.get('/categoriaUpdate/:id', middlewares.adminControl, controllerCategoria.getUpdate);
+route.post('/categoriaUpdate', middlewares.adminControl, controllerCategoria.postUpdate);
+route.get('/categoriaDelete/:id', middlewares.adminControl, controllerCategoria.getDelete);
 
-route.get('/comentarioCreate',    controllerComentario.getCreate);
-route.post('/comentarioCreate',   controllerComentario.postCreate);
-route.get('/comentarioList',      controllerComentario.getList);
+// ADMIN - HABILIDADES
+route.get('/habilidadeList', middlewares.adminControl, controllerHabilidade.getList);
+route.get('/habilidadeCreate', middlewares.adminControl, controllerHabilidade.getCreate);
+route.post('/habilidadeCreate', middlewares.adminControl, controllerHabilidade.postCreate);
+route.get('/habilidadeUpdate/:id', middlewares.adminControl, controllerHabilidade.getUpdate);
+route.post('/habilidadeUpdate', middlewares.adminControl, controllerHabilidade.postUpdate);
+route.get('/habilidadeDelete/:id', middlewares.adminControl, controllerHabilidade.getDelete);
 
-// ─────────────────────────────────────────────────────────────────────────────
-// ÁREA DO ADMINISTRADOR (tipo == 1, validado pelo middleware)
-// ─────────────────────────────────────────────────────────────────────────────
-
-// Usuários
-route.get('/usuarioList',          controllerUsuario.getList);
-route.get('/usuarioCreate',        controllerUsuario.getCreate);
-route.post('/usuarioCreate',       controllerUsuario.postCreate);
-route.get('/usuarioUpdate/:id',    controllerUsuario.getUpdate);
-route.post('/usuarioUpdate',       controllerUsuario.postUpdate);
-route.get('/usuarioDelete/:id',    controllerUsuario.getDelete);
-
-// Categorias
-route.get('/categoriaList',        controllerCategoria.getList);
-route.get('/categoriaCreate',      controllerCategoria.getCreate);
-route.post('/categoriaCreate',     controllerCategoria.postCreate);
-route.get('/categoriaUpdate/:id',  controllerCategoria.getUpdate);
-route.post('/categoriaUpdate',     controllerCategoria.postUpdate);
-route.get('/categoriaDelete/:id',  controllerCategoria.getDelete);
-
-// Habilidades
-route.get('/habilidadeList',       controllerHabilidade.getList);
-route.get('/habilidadeCreate',     controllerHabilidade.getCreate);
-route.post('/habilidadeCreate',    controllerHabilidade.postCreate);
-route.get('/habilidadeUpdate/:id', controllerHabilidade.getUpdate);
-route.post('/habilidadeUpdate',    controllerHabilidade.postUpdate);
-route.get('/habilidadeDelete/:id', controllerHabilidade.getDelete);
+module.exports = route;

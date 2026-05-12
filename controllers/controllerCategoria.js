@@ -6,49 +6,55 @@ module.exports = {
     },
 
     async postCreate(req, res) {
-        db.Categoria.create(req.body).then(() => {
-            res.redirect('/home');
-        }).catch((err) => {
+        try {
+            await db.Categoria.create(req.body);
+            res.redirect('/categoriaList');
+        } catch (err) {
             console.log(err);
-        });
+            res.redirect('/categoriaCreate');
+        }
     },
 
     async getList(req, res) {
-        db.Categoria.findAll()
-        .then(categorias => {
+        try {
+            const categorias = await db.Categoria.findAll({ order: [['id', 'ASC']] });
             res.render('categoria/categoriaList', {
                 categorias: categorias.map(catg => catg.toJSON())
             });
-        }).catch((err) => {
+        } catch (err) {
             console.log(err);
-        });
+            res.redirect('/home');
+        }
     },
 
     async getUpdate(req, res) {
-        await db.Categoria.findByPk(req.params.id)
-        .then(categoria => res.render('categoria/categoriaUpdate', {
-            categoria: categoria.dataValues
-        }))
-        .catch(function (err) {
+        try {
+            const categoria = await db.Categoria.findByPk(req.params.id);
+            if (!categoria) return res.redirect('/categoriaList');
+            res.render('categoria/categoriaUpdate', { categoria: categoria.toJSON() });
+        } catch (err) {
             console.log(err);
-        });
+            res.redirect('/categoriaList');
+        }
     },
 
     async postUpdate(req, res) {
-        await db.Categoria.update(req.body, {
-            where: { id: req.body.id }
-        }).then(() => res.redirect('/home'))
-        .catch(function (err) {
+        try {
+            await db.Categoria.update(req.body, { where: { id: req.body.id } });
+            res.redirect('/categoriaList');
+        } catch (err) {
             console.log(err);
-        });
+            res.redirect('/categoriaList');
+        }
     },
 
     async getDelete(req, res) {
-        await db.Categoria.destroy({
-            where: { id: req.params.id }
-        }).then(() => res.redirect('/home'))
-        .catch(err => {
+        try {
+            await db.Categoria.destroy({ where: { id: req.params.id } });
+            res.redirect('/categoriaList');
+        } catch (err) {
             console.log(err);
-        });
+            res.redirect('/categoriaList');
+        }
     }
 };

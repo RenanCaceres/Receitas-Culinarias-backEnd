@@ -9,26 +9,49 @@ var db = {};
 db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 
-// ── Modelos ───────────────────────────────────────────────────────────────────
-db.Usuario        = require('../models/relational/usuario.js')(sequelize, Sequelize);
-db.Receita        = require('../models/relational/receita.js')(sequelize, Sequelize);
-db.Categoria      = require('../models/relational/categoria.js')(sequelize, Sequelize);
-db.Habilidade     = require('../models/relational/habilidade.js')(sequelize, Sequelize);
-db.AlunoHabilidade = require('../models/relational/alunoHabilidade.js')(sequelize, Sequelize);
-db.ReceitaAluno   = require('../models/relational/receitaAluno.js')(sequelize, Sequelize);
+db.Usuario          = require('../models/relational/usuario.js')(sequelize, Sequelize);
+db.Receita          = require('../models/relational/receita.js')(sequelize, Sequelize);
+db.Categoria        = require('../models/relational/categoria.js')(sequelize, Sequelize);
+db.Habilidade       = require('../models/relational/habilidade.js')(sequelize, Sequelize);
+db.AlunoHabilidade  = require('../models/relational/alunoHabilidade.js')(sequelize, Sequelize);
+db.ReceitaAluno     = require('../models/relational/receitaAluno.js')(sequelize, Sequelize);
+db.ReceitaCategoria = require('../models/relational/receitaCategoria.js')(sequelize, Sequelize);
 
-// ── Associações ───────────────────────────────────────────────────────────────
+// Receita N:N Categoria
+// O PDF exige que uma receita possa pertencer a várias categorias.
+db.Receita.belongsToMany(db.Categoria, {
+    through: db.ReceitaCategoria,
+    foreignKey: 'receitaId',
+    as: 'Categorias'
+});
+db.Categoria.belongsToMany(db.Receita, {
+    through: db.ReceitaCategoria,
+    foreignKey: 'categoriaId',
+    as: 'Receitas'
+});
 
-// Categoria 1:N Receita
-db.Categoria.hasMany(db.Receita,   { foreignKey: 'categoriaId', onDelete: 'NO ACTION' });
-db.Receita.belongsTo(db.Categoria, { foreignKey: 'categoriaId' });
+// Usuario N:N Habilidade, com nível de 0 a 10 na tabela intermediária.
+db.Usuario.belongsToMany(db.Habilidade, {
+    through: db.AlunoHabilidade,
+    foreignKey: 'usuarioId',
+    as: 'Habilidades'
+});
+db.Habilidade.belongsToMany(db.Usuario, {
+    through: db.AlunoHabilidade,
+    foreignKey: 'habilidadeId',
+    as: 'Alunos'
+});
 
-// Usuario N:N Habilidade  (tabela: alunoHabilidade)
-db.Usuario.belongsToMany(db.Habilidade, { through: db.AlunoHabilidade, foreignKey: 'usuarioId' });
-db.Habilidade.belongsToMany(db.Usuario, { through: db.AlunoHabilidade, foreignKey: 'habilidadeId' });
-
-// Usuario N:N Receita  (tabela: receitaAluno)
-db.Receita.belongsToMany(db.Usuario, { through: db.ReceitaAluno, foreignKey: 'receitaId' });
-db.Usuario.belongsToMany(db.Receita, { through: db.ReceitaAluno, foreignKey: 'usuarioId' });
+// Receita N:N Usuario, representando os alunos responsáveis pela receita.
+db.Receita.belongsToMany(db.Usuario, {
+    through: db.ReceitaAluno,
+    foreignKey: 'receitaId',
+    as: 'Responsaveis'
+});
+db.Usuario.belongsToMany(db.Receita, {
+    through: db.ReceitaAluno,
+    foreignKey: 'usuarioId',
+    as: 'Receitas'
+});
 
 module.exports = db;

@@ -1,44 +1,41 @@
 module.exports = {
     logRegister(req, res, next) {
-        console.log(req.url + ' ' + req.method + ' ' + new Date());
+        console.log(`${req.method} ${req.url} ${new Date().toLocaleString('pt-BR')}`);
         next();
     },
 
     sessionControl(req, res, next) {
-        if (req.session.login != undefined) {
+        if (req.session && req.session.login !== undefined) {
+            res.locals.usuarioLogin = req.session.login;
             res.locals.login = req.session.login;
+            res.locals.usuarioId = req.session.alunoId;
+            res.locals.isAdmin = Number(req.session.tipo) === 1;
+            return next();
+        }
 
-            if (req.session.tipo == 2) {
-                res.locals.admin = true;
-            }
+        const rotasPublicas = [
+            '/',
+            '/login',
+            '/receitasPublicas',
+            '/receitasPorCategoria',
+            '/relatorioHabilidades'
+        ];
 
-            next();
+        if (rotasPublicas.includes(req.path)) {
+            return next();
         }
-        else if ((req.url == '/') && (req.method == 'GET')) {
-            next();
+
+        if (req.path.startsWith('/receitasPorCategoria/')) {
+            return next();
         }
-        else if ((req.url == '/login') && (req.method == 'POST')) {
-            next();
-        }
-        else if ((req.url == '/receitas') && (req.method == 'GET')) {
-            next();
-        }
-        else if ((req.url.includes('/receitasCategoria')) && (req.method == 'GET')) {
-            next();
-        }
-        else if ((req.url == '/relatorioHabilidades') && (req.method == 'GET')) {
-            next();
-        }
-        else {
-            res.redirect('/');
-        }
+
+        return res.redirect('/');
     },
 
     adminControl(req, res, next) {
-        if (req.session.tipo == 2) {
-            next();
-        } else {
-            res.redirect('/home');
+        if (req.session && Number(req.session.tipo) === 1) {
+            return next();
         }
+        return res.redirect('/home');
     }
 };

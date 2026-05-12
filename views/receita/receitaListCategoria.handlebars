@@ -8,8 +8,8 @@
             <label>Escolha uma categoria:</label>
             <select name="categoriaId" onchange="this.form.submit()">
                 <option value="">-- Selecione --</option>
-                {{#each categorias}}
-                <option value="{{id}}" {{#eq id ../categoriaSelecionada.id}}selected{{/eq}}>{{nome}}</option>
+                {{#each Categorias}}
+                <option value="{{id}}" {{#if selecionada}}selected{{/if}}>{{nome}}</option>
                 {{/each}}
             </select>
         </div>
@@ -18,7 +18,7 @@
 
 {{#if categoriaSelecionada}}
 <h3 style="margin-bottom:16px;">
-    Receitas em <span style="color:#c0392b;">{{categoriaSelecionada.nome}}</span>
+    Receitas em <span style="color:#c0392b;">{{nomeCategoriaSelecionada}}</span>
     ({{receitas.length}})
 </h3>
 {{/if}}
@@ -30,13 +30,13 @@
         <h3 style="margin-bottom:8px; color:#c0392b;">{{nome}}</h3>
         <p style="color:#555; margin-bottom:12px; font-size:0.95rem;">{{descricao}}</p>
         <div style="margin-bottom:8px;">
-            {{#each categorias}}
+            {{#each Categorias}}
             <span class="badge">{{nome}}</span>
             {{/each}}
         </div>
         <p style="font-size:0.85rem; color:#888;">
             👨‍🍳
-            {{#each responsaveis}}{{nome}}{{#unless @last}}, {{/unless}}{{/each}}
+            {{#each Responsaveis}}{{nome}}{{#unless @last}}, {{/unless}}{{/each}}
         </p>
         {{#if linkExterno}}
         <br>

@@ -1,5 +1,11 @@
-const StringCon = {
-    connection: "mongodb+srv://renan2004:1008@back@cluster0.6xmi7lb.mongodb.net/"
-};
+const mongoose = require('mongoose');
 
-module.exports = StringCon;
+mongoose.connect('mongodb+srv://renan2004:back1008@cluster0.6xmi7lb.mongodb.net/')
+    .then(() => {
+        console.log('MongoDB Atlas conectado!');
+    })
+    .catch((erro) => {
+        console.log('Erro ao conectar no MongoDB Atlas:', erro);
+    });
+
+module.exports = mongoose;
