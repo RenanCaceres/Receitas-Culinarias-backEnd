@@ -1,11 +1,20 @@
-<div class="card">
-    <h2>👋 Bem-vindo, {{usuarioLogin}}!</h2>
-    <br>
-    <p>Use o menu acima para navegar pelo sistema.</p>
-    <br>
+<div class="card" style="background:linear-gradient(135deg,var(--charcoal) 0%,var(--rust-dark) 100%);border:none;padding:36px 40px;margin-bottom:28px;position:relative;overflow:hidden;">
+    <div style="position:absolute;right:40px;top:50%;transform:translateY(-50%);font-size:5rem;opacity:0.06;">🍽️</div>
+    <h2 style="font-family:'Playfair Display',serif;font-size:1.8rem;font-weight:700;color:#FFFCF7;margin-bottom:10px;">
+        👋 Bem-vindo, {{usuarioLogin}}!
+    </h2>
     {{#if isAdmin}}
-    <p><strong>Você está logado como administrador.</strong> Você tem acesso ao gerenciamento de usuários, categorias e habilidades.</p>
+    <p style="color:#B0A090;font-weight:300;">Você está logado como <strong style="color:var(--gold-light);">administrador</strong>. Acesso total ao sistema.</p>
     {{else}}
-    <p>Você pode cadastrar e gerenciar suas receitas e habilidades culinárias.</p>
+    <p style="color:#B0A090;font-weight:300;">Você pode cadastrar e gerenciar suas receitas e habilidades culinárias.</p>
     {{/if}}
+</div>
+
+<h3 style="font-family:'Playfair Display',serif;font-size:1.2rem;color:var(--charcoal);margin-bottom:16px;">Ações Rápidas</h3>
+<div style="display:flex;gap:12px;flex-wrap:wrap;">
+    <a href="/receitaCreate" class="btn btn-primary">➕ Nova Receita</a>
+    <a href="/receitaList" class="btn btn-secondary">📋 Minhas Receitas</a>
+    <a href="/minhasHabilidades" class="btn btn-secondary">⭐ Gerenciar Habilidades</a>
+    <a href="/comentarioList" class="btn btn-secondary">💬 Comentários</a>
+    <a href="/relatorioHabilidades" class="btn btn-secondary">📊 Relatório</a>
 </div>

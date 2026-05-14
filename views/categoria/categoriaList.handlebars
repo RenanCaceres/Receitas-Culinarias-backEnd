@@ -3,16 +3,20 @@
     <a href="/categoriaCreate" class="btn btn-primary">➕ Nova Categoria</a>
 </div>
 <table>
-    <thead><tr><th>ID</th><th>Nome</th><th>Ações</th></tr></thead>
+    <thead>
+        <tr><th>ID</th><th>Nome</th><th>Ações</th></tr>
+    </thead>
     <tbody>
         {{#each categorias}}
         <tr>
-            <td>{{id}}</td>
-            <td>{{nome}}</td>
+            <td style="color:var(--gray-text);font-size:0.82rem;">{{id}}</td>
+            <td><strong>{{nome}}</strong></td>
             <td>
-                <a href="/categoriaUpdate/{{id}}" class="btn btn-secondary">✏️ Editar</a>
-                <a href="/categoriaDelete/{{id}}" class="btn btn-danger"
-                   onclick="return confirm('Excluir categoria {{nome}}?')">🗑️ Excluir</a>
+                <div style="display:flex;gap:8px;">
+                    <a href="/categoriaUpdate/{{id}}" class="btn btn-secondary" style="padding:7px 12px;font-size:0.82rem;">✏️ Editar</a>
+                    <a href="/categoriaDelete/{{id}}" class="btn btn-danger" style="padding:7px 12px;font-size:0.82rem;"
+                       onclick="return confirm('Excluir categoria {{nome}}?')">🗑️</a>
+                </div>
             </td>
         </tr>
         {{/each}}

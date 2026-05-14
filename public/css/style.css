@@ -1,33 +1,413 @@
-* { box-sizing: border-box; margin: 0; padding: 0; }
-body { font-family: Arial, sans-serif; background: #f5f5f5; color: #333; }
-header { background: #c0392b; color: white; padding: 16px 32px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
-header h1 { font-size: 1.4rem; }
-nav { display: flex; gap: 8px; flex-wrap: wrap; }
-nav a { text-decoration: none; }
-nav a button { background: rgba(255,255,255,0.2); color: white; border: 1px solid rgba(255,255,255,0.4); padding: 8px 12px; cursor: pointer; border-radius: 4px; font-size: 0.85rem; }
-nav a button:hover { background: rgba(255,255,255,0.35); }
-main { max-width: 1100px; margin: 32px auto; padding: 0 16px; }
-.card { background: white; border-radius: 6px; padding: 24px; margin-bottom: 20px; box-shadow: 0 1px 4px rgba(0,0,0,0.08); }
-.btn { display: inline-block; padding: 8px 16px; border-radius: 4px; cursor: pointer; font-size: 0.9rem; text-decoration: none; border: none; }
-.btn-primary { background: #c0392b; color: white; }
-.btn-secondary { background: #7f8c8d; color: white; }
-.btn-danger { background: #e74c3c; color: white; }
-.btn-success { background: #27ae60; color: white; }
-.btn:hover { opacity: 0.85; }
-.page-title { margin-bottom: 20px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
-.page-title h2 { font-size: 1.3rem; }
-.form-group { margin-bottom: 16px; }
-.form-group label { display: block; margin-bottom: 4px; font-weight: bold; }
-.form-group input, .form-group textarea, .form-group select { width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; font-size: 1rem; }
-.form-group textarea { height: 100px; resize: vertical; }
-.alert-erro { background: #fdecea; color: #c0392b; padding: 10px 14px; border-radius: 4px; margin-bottom: 16px; }
-.badge { display: inline-block; padding: 2px 8px; border-radius: 12px; font-size: 0.75rem; background: #fdecea; color: #c0392b; margin: 2px; }
-.receita-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
-table { width: 100%; border-collapse: collapse; background: white; border-radius: 6px; overflow: hidden; }
-th { background: #c0392b; color: white; padding: 10px 12px; text-align: left; }
-td { padding: 10px 12px; border-bottom: 1px solid #eee; }
-tr:last-child td { border-bottom: none; }
-tr:hover td { background: #fdf0ef; }
-.progress-bar { background: #eee; border-radius: 10px; height: 10px; overflow: hidden; }
-.progress-fill { background: #c0392b; height: 100%; border-radius: 10px; }
-@media (max-width: 700px) { header { align-items: flex-start; } nav a button { width: 100%; } table { font-size: 0.85rem; } }
+/* ═══════════════════════════════════════════════════════════
+   PORTFÓLIO DE RECEITAS CULINÁRIAS — style.css
+   ═══════════════════════════════════════════════════════════ */
+
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=DM+Sans:wght@300;400;500;600&display=swap');
+
+:root {
+  --cream: #FBF7F0;
+  --warm-white: #FFFCF7;
+  --rust: #C0392B;
+  --rust-dark: #922B21;
+  --rust-light: #E74C3C;
+  --terracotta: #D35400;
+  --gold: #D4A017;
+  --gold-light: #F0C040;
+  --brown: #6B3A2A;
+  --charcoal: #2C1810;
+  --gray-text: #5A4A42;
+  --gray-light: #EDE8E0;
+  --border: #D9D0C0;
+  --shadow: rgba(44,24,16,0.10);
+  --shadow-heavy: rgba(44,24,16,0.20);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--cream);
+  color: var(--charcoal);
+  min-height: 100vh;
+}
+
+/* ─── SCROLLBAR ─────────────────────────────────────────── */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: var(--cream); }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: var(--rust); }
+
+/* ─── HEADER / NAV ──────────────────────────────────────── */
+header {
+  background: var(--charcoal);
+  height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 40px;
+  box-shadow: 0 4px 20px var(--shadow-heavy);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+header h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--cream);
+  letter-spacing: 0.02em;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+nav {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+
+nav a {
+  text-decoration: none;
+}
+
+nav a button,
+nav button {
+  background: transparent;
+  border: none;
+  color: #B0A090;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 500;
+  padding: 8px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+nav a button:hover,
+nav button:hover {
+  color: var(--cream);
+  background: rgba(255,255,255,0.08);
+}
+
+/* ─── MAIN ──────────────────────────────────────────────── */
+main {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 44px 40px 80px;
+}
+
+/* ─── PAGE TITLE ROW ─────────────────────────────────────── */
+.page-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 32px;
+  flex-wrap: wrap;
+}
+
+.page-title h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.85rem;
+  font-weight: 700;
+  color: var(--charcoal);
+  line-height: 1.2;
+}
+
+/* ─── BUTTONS ────────────────────────────────────────────── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 10px 20px;
+  border-radius: 10px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  border: none;
+  transition: all 0.2s ease;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+  line-height: 1;
+}
+
+input[type=submit].btn,
+input[type=submit].btn-primary {
+  display: inline-block;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--rust), var(--rust-dark));
+  color: white;
+  box-shadow: 0 4px 12px rgba(192,57,43,0.30);
+}
+.btn-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(192,57,43,0.42);
+}
+
+.btn-secondary {
+  background: var(--gray-light);
+  color: var(--gray-text);
+  border: 1.5px solid var(--border);
+}
+.btn-secondary:hover { background: var(--border); color: var(--charcoal); }
+
+.btn-danger {
+  background: #FDF2F2;
+  color: var(--rust);
+  border: 1.5px solid #F5C6C6;
+}
+.btn-danger:hover { background: var(--rust); color: white; border-color: var(--rust); }
+
+/* ─── CARD ───────────────────────────────────────────────── */
+.card {
+  background: var(--warm-white);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 28px;
+  box-shadow: 0 2px 12px var(--shadow);
+  margin-bottom: 20px;
+  transition: box-shadow 0.2s;
+}
+.card:hover { box-shadow: 0 6px 24px var(--shadow-heavy); }
+
+/* ─── TABLE ──────────────────────────────────────────────── */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--warm-white);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 2px 12px var(--shadow);
+}
+
+thead {
+  background: var(--charcoal);
+}
+
+thead th {
+  padding: 14px 20px;
+  text-align: left;
+  font-size: 0.74rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #B0A090;
+}
+
+tbody tr {
+  border-bottom: 1px solid var(--gray-light);
+  transition: background 0.15s;
+}
+tbody tr:last-child { border-bottom: none; }
+tbody tr:hover { background: rgba(212,160,23,0.04); }
+
+tbody td {
+  padding: 15px 20px;
+  font-size: 0.9rem;
+  color: var(--charcoal);
+  vertical-align: middle;
+}
+
+/* ─── BADGE ──────────────────────────────────────────────── */
+.badge {
+  display: inline-block;
+  padding: 4px 10px;
+  background: rgba(212,160,23,0.12);
+  color: var(--brown);
+  border: 1px solid rgba(212,160,23,0.30);
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  margin: 2px;
+}
+
+/* ─── FORMS ──────────────────────────────────────────────── */
+.form-group {
+  margin-bottom: 22px;
+}
+
+.form-group label {
+  display: block;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--gray-text);
+  margin-bottom: 7px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.form-group label small {
+  font-size: 0.75rem;
+  font-weight: 400;
+  color: #aaa;
+  text-transform: none;
+  letter-spacing: 0;
+  margin-left: 4px;
+}
+
+.form-group input[type=text],
+.form-group input[type=password],
+.form-group input[type=url],
+.form-group input[type=number],
+.form-group textarea,
+.form-group select,
+input[type=text]:not(.btn),
+input[type=password]:not(.btn),
+input[type=url]:not(.btn),
+input[type=number]:not(.btn),
+textarea,
+select {
+  width: 100%;
+  padding: 12px 15px;
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  background: white;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.92rem;
+  color: var(--charcoal);
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  appearance: none;
+}
+
+input[type=text]:focus,
+input[type=password]:focus,
+input[type=url]:focus,
+input[type=number]:focus,
+textarea:focus,
+select:focus {
+  border-color: var(--rust);
+  box-shadow: 0 0 0 3px rgba(192,57,43,0.10);
+}
+
+textarea {
+  resize: vertical;
+  min-height: 110px;
+  line-height: 1.6;
+}
+
+select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%235A4A42' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  padding-right: 40px;
+  cursor: pointer;
+}
+
+input[type=submit].btn-primary,
+input[type=submit] {
+  cursor: pointer;
+  background: linear-gradient(135deg, var(--rust), var(--rust-dark));
+  color: white;
+  border: none;
+  padding: 12px 28px;
+  border-radius: 10px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 600;
+  box-shadow: 0 4px 12px rgba(192,57,43,0.30);
+  transition: all 0.2s;
+  margin-top: 8px;
+}
+input[type=submit]:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(192,57,43,0.42);
+}
+
+/* checkbox groups inside forms */
+.form-group > div > label,
+div[style*="flex-wrap:wrap"] > label,
+div[style*="flex-wrap: wrap"] > label {
+  display: flex !important;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  border: 1.5px solid var(--border);
+  background: var(--cream);
+  font-size: 0.88rem;
+  font-weight: 500;
+  transition: all 0.15s;
+  color: var(--charcoal);
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+div[style*="flex-wrap:wrap"] > label:hover,
+div[style*="flex-wrap: wrap"] > label:hover {
+  border-color: var(--rust);
+  color: var(--rust);
+}
+
+input[type=checkbox] {
+  accent-color: var(--rust);
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+}
+
+/* ─── ALERT ──────────────────────────────────────────────── */
+.alert-erro {
+  padding: 13px 16px;
+  background: #FDF2F2;
+  border: 1px solid #F5C6C6;
+  color: var(--rust);
+  border-radius: 10px;
+  font-size: 0.88rem;
+  font-weight: 500;
+  margin-bottom: 20px;
+}
+
+/* ─── RECEITA GRID (pública) ─────────────────────────────── */
+.receita-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 22px;
+}
+
+/* ─── PROGRESS BAR ───────────────────────────────────────── */
+.progress-bar {
+  height: 10px;
+  background: var(--gray-light);
+  border-radius: 10px;
+  overflow: hidden;
+}
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--rust), var(--terracotta));
+  border-radius: 10px;
+  transition: width 0.6s ease;
+}
+
+/* ─── RESPONSIVE ─────────────────────────────────────────── */
+@media (max-width: 768px) {
+  header { padding: 0 20px; }
+  main { padding: 28px 20px 60px; }
+  .receita-grid { grid-template-columns: 1fr; }
+  .page-title { flex-direction: column; align-items: flex-start; }
+  nav a button { font-size: 0.75rem; padding: 6px 10px; }
+  header h1 { font-size: 1rem; }
+}
+
+/* ─── ANIMATIONS ─────────────────────────────────────────── */
+@keyframes fadeSlideUp {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+main > * {
+  animation: fadeSlideUp 0.32s ease both;
+}

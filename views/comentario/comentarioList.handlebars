@@ -6,13 +6,23 @@
 {{#if comentarios.length}}
     {{#each comentarios}}
     <div class="card">
-        <h3 style="color:#c0392b; margin-bottom:4px;">{{titulo}}</h3>
-        <p style="color:#777; margin-bottom:8px;">Por {{autor}}</p>
-        <p>{{texto}}</p>
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px;">
+            <div style="width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,var(--rust),var(--terracotta));display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:0.9rem;flex-shrink:0;">
+                {{#if autor}}{{autor.[0]}}{{else}}?{{/if}}
+            </div>
+            <div>
+                <h4 style="font-size:0.95rem;font-weight:600;color:var(--charcoal);">{{titulo}}</h4>
+                <span style="font-size:0.78rem;color:var(--gray-text);">Por {{autor}}</span>
+            </div>
+        </div>
+        <p style="font-size:0.92rem;line-height:1.7;color:var(--gray-text);">{{texto}}</p>
     </div>
     {{/each}}
 {{else}}
-<div class="card" style="text-align:center; color:#666;">
-    <p>Nenhum comentário cadastrado.</p>
+<div class="card" style="text-align:center;padding:60px 40px;">
+    <div style="font-size:3rem;margin-bottom:16px;">💬</div>
+    <h3 style="font-family:'Playfair Display',serif;font-size:1.2rem;color:var(--charcoal);margin-bottom:10px;">Nenhum comentário ainda</h3>
+    <p style="color:var(--gray-text);margin-bottom:24px;">Seja o primeiro a comentar!</p>
+    <a href="/comentarioCreate" class="btn btn-primary">➕ Novo Comentário</a>
 </div>
 {{/if}}

@@ -1,10 +1,17 @@
 <div class="page-title">
     <h2>✏️ Editar Receita</h2>
-    <a href="/receitaList" class="btn btn-secondary">← Voltar</a>
+    <div style="display:flex;gap:10px;">
+        <a href="/receitaDelete/{{receita.id}}" class="btn btn-danger"
+           onclick="return confirm('Excluir a receita {{receita.nome}}?')">🗑️ Excluir</a>
+        <a href="/receitaList" class="btn btn-secondary">← Voltar</a>
+    </div>
 </div>
+
 <div class="card" style="max-width:700px;">
     <form action="/receitaUpdate" method="post">
         <input type="hidden" name="id" value="{{receita.id}}">
+
+        <p style="font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:600;color:var(--charcoal);margin-bottom:20px;padding-bottom:10px;border-bottom:2px solid var(--rust);display:inline-block;">Informações Básicas</p>
 
         <div class="form-group">
             <label>Nome da Receita</label>
@@ -19,7 +26,7 @@
             <textarea name="ingredientes">{{receita.ingredientes}}</textarea>
         </div>
         <div class="form-group">
-            <label>Modo de preparo</label>
+            <label>Modo de Preparo</label>
             <textarea name="preparo">{{receita.preparo}}</textarea>
         </div>
         <div class="form-group">
@@ -27,11 +34,14 @@
             <input type="url" name="linkExterno" value="{{receita.linkExterno}}">
         </div>
 
+        <hr style="border:none;border-top:1px solid var(--border);margin:24px 0;">
+        <p style="font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:600;color:var(--charcoal);margin-bottom:20px;padding-bottom:10px;border-bottom:2px solid var(--rust);display:inline-block;">Classificação</p>
+
         <div class="form-group">
             <label>Categorias</label>
-            <div style="display:flex; flex-wrap:wrap; gap:10px; padding:8px; border:1px solid #ccc; border-radius:4px; background:white;">
+            <div style="display:flex;flex-wrap:wrap;gap:10px;padding:12px;border:1.5px solid var(--border);border-radius:10px;background:white;">
                 {{#each categorias}}
-                <label style="display:flex; align-items:center; gap:4px; cursor:pointer;">
+                <label style="display:flex;align-items:center;gap:8px;padding:8px 14px;border-radius:8px;cursor:pointer;border:1.5px solid var(--border);background:var(--cream);font-size:0.88rem;font-weight:500;color:var(--charcoal);">
                     <input type="checkbox" name="categorias" value="{{id}}" {{#if selecionada}}checked{{/if}}> {{nome}}
                 </label>
                 {{/each}}
@@ -40,15 +50,15 @@
 
         <div class="form-group">
             <label>Responsáveis</label>
-            <div style="display:flex; flex-wrap:wrap; gap:10px; padding:8px; border:1px solid #ccc; border-radius:4px; background:white;">
+            <div style="display:flex;flex-wrap:wrap;gap:10px;padding:12px;border:1.5px solid var(--border);border-radius:10px;background:white;">
                 {{#each alunos}}
-                <label style="display:flex; align-items:center; gap:4px; cursor:pointer;">
-                    <input type="checkbox" name="responsaveis" value="{{id}}" {{#if selecionado}}checked{{/if}}> {{nome}} ({{login}})
+                <label style="display:flex;align-items:center;gap:8px;padding:8px 14px;border-radius:8px;cursor:pointer;border:1.5px solid var(--border);background:var(--cream);font-size:0.88rem;font-weight:500;color:var(--charcoal);">
+                    <input type="checkbox" name="responsaveis" value="{{id}}" {{#if selecionado}}checked{{/if}}> {{nome}} <span style="color:var(--gray-text);font-size:0.8rem;">({{login}})</span>
                 </label>
                 {{/each}}
             </div>
         </div>
 
-        <input type="submit" value="💾 Salvar Alterações" class="btn btn-primary">
+        <input type="submit" value="💾 Salvar Alterações" class="btn btn-primary" style="width:100%;text-align:center;padding:14px;">
     </form>
 </div>

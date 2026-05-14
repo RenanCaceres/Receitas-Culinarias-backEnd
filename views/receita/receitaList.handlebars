@@ -7,7 +7,7 @@
 <table>
     <thead>
         <tr>
-            <th>Nome</th>
+            <th>Receita</th>
             <th>Categorias</th>
             <th>Responsáveis</th>
             <th>Link</th>
@@ -17,35 +17,37 @@
     <tbody>
         {{#each receitas}}
         <tr>
-            <td><strong>{{nome}}</strong><br><small style="color:#666;">{{descricao}}</small></td>
             <td>
-                {{#each Categorias}}
-                <span class="badge">{{nome}}</span>
-                {{/each}}
+                <strong>{{nome}}</strong>
+                <div style="font-size:0.8rem;color:var(--gray-text);margin-top:2px;">{{descricao}}</div>
             </td>
             <td>
-                {{#each Responsaveis}}
-                <span class="badge">{{nome}}</span>
-                {{/each}}
+                {{#each Categorias}}<span class="badge">{{nome}}</span>{{/each}}
+            </td>
+            <td>
+                {{#each Responsaveis}}<span class="badge">{{nome}}</span>{{/each}}
             </td>
             <td>
                 {{#if linkExterno}}
-                <a href="{{linkExterno}}" target="_blank" class="btn btn-secondary" style="font-size:0.8rem;">🔗 Ver</a>
+                <a href="{{linkExterno}}" target="_blank" class="btn btn-secondary" style="font-size:0.8rem;padding:7px 12px;">🔗 Ver</a>
                 {{/if}}
             </td>
             <td>
-                <a href="/receitaUpdate/{{id}}" class="btn btn-secondary">✏️</a>
-                <a href="/receitaDelete/{{id}}" class="btn btn-danger"
-                   onclick="return confirm('Excluir a receita {{nome}}?')">🗑️</a>
+                <div style="display:flex;gap:8px;align-items:center;">
+                    <a href="/receitaUpdate/{{id}}" class="btn btn-secondary" style="padding:8px 12px;">✏️</a>
+                    <a href="/receitaDelete/{{id}}" class="btn btn-danger" style="padding:8px 12px;"
+                       onclick="return confirm('Excluir a receita {{nome}}?')">🗑️</a>
+                </div>
             </td>
         </tr>
         {{/each}}
     </tbody>
 </table>
 {{else}}
-<div class="card" style="text-align:center; color:#666;">
-    <p>Nenhuma receita cadastrada ainda.</p>
-    <br>
-    <a href="/receitaCreate" class="btn btn-primary">Cadastrar primeira receita</a>
+<div class="card" style="text-align:center;padding:60px 40px;">
+    <div style="font-size:3rem;margin-bottom:16px;">📋</div>
+    <h3 style="font-family:'Playfair Display',serif;font-size:1.3rem;color:var(--charcoal);margin-bottom:10px;">Nenhuma receita cadastrada</h3>
+    <p style="color:var(--gray-text);margin-bottom:24px;">Comece cadastrando sua primeira criação culinária!</p>
+    <a href="/receitaCreate" class="btn btn-primary">➕ Cadastrar primeira receita</a>
 </div>
 {{/if}}

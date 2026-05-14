@@ -1,35 +1,33 @@
 <div class="page-title">
-    <h2>📊 Relatório de Habilidades Culinárias</h2>
+    <h2>📊 Relatório de Habilidades</h2>
+    <a href="/relatorioHabilidades" class="btn btn-secondary">🔄 Atualizar</a>
 </div>
-<p style="color:#666; margin-bottom:20px;">
-    Total de alunos cadastrados no sistema: <strong>{{totalAlunos}}</strong>
+<p style="color:var(--gray-text);margin-bottom:28px;font-size:0.93rem;">
+    Total de alunos cadastrados no sistema: <strong style="color:var(--charcoal);">{{totalAlunos}}</strong>
 </p>
 
 {{#if dados.length}}
-<div style="display:grid; gap:16px;">
+<div style="display:grid;gap:16px;">
     {{#each dados}}
-    <div class="card">
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
-            <h3 style="color:#c0392b;">{{nome}}</h3>
-            <span style="font-size:0.95rem; color:#555;">
-                <strong>{{alunosComHabilidade}}</strong> de <strong>{{totalAlunos}}</strong> alunos
-                &nbsp;|&nbsp;
-                Nível médio: <strong>{{nivelMedio}}/10</strong>
-            </span>
-        </div>
-        <div style="display:flex; align-items:center; gap:12px;">
-            <div class="progress-bar" style="flex:1;">
-                <div class="progress-fill" style="width:{{proporcao}}%;"></div>
+    <div class="card" style="margin:0;">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:14px;gap:16px;flex-wrap:wrap;">
+            <h3 style="font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;color:var(--charcoal);">{{nome}}</h3>
+            <div style="text-align:right;flex-shrink:0;">
+                <div style="font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:700;color:var(--rust);line-height:1;">{{proporcao}}%</div>
+                <div style="font-size:0.78rem;color:var(--gray-text);margin-top:2px;">
+                    {{alunosComHabilidade}} de {{totalAlunos}} alunos · Nível médio: <strong>{{nivelMedio}}/10</strong>
+                </div>
             </div>
-            <span style="font-size:1.1rem; font-weight:bold; color:#c0392b; min-width:50px; text-align:right;">
-                {{proporcao}}%
-            </span>
+        </div>
+        <div class="progress-bar">
+            <div class="progress-fill" style="width:{{proporcao}}%;"></div>
         </div>
     </div>
     {{/each}}
 </div>
 {{else}}
-<div class="card" style="text-align:center; color:#666;">
-    <p>Nenhuma habilidade cadastrada ainda.</p>
+<div class="card" style="text-align:center;padding:60px 40px;">
+    <div style="font-size:3rem;margin-bottom:16px;">📊</div>
+    <p style="color:var(--gray-text);">Nenhuma habilidade cadastrada ainda.</p>
 </div>
 {{/if}}

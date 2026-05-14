@@ -1,33 +1,44 @@
-<div class="page-title">
-    <h2>🍽️ Portfólio de Receitas</h2>
+<div style="background:linear-gradient(135deg,var(--charcoal) 0%,#3D2318 60%,var(--rust-dark) 100%);padding:70px 40px 90px;text-align:center;margin:-44px -40px 0;position:relative;overflow:hidden;">
+    <div style="position:absolute;inset:0;background:radial-gradient(circle at 20% 50%,rgba(212,160,23,0.08) 0%,transparent 50%),radial-gradient(circle at 80% 20%,rgba(192,57,43,0.15) 0%,transparent 50%);"></div>
+    <div style="position:relative;z-index:1;max-width:640px;margin:0 auto;">
+        <span style="font-size:0.72rem;font-weight:600;letter-spacing:0.25em;text-transform:uppercase;color:var(--gold-light);display:block;margin-bottom:18px;">✦ Culinária com Criatividade ✦</span>
+        <h1 style="font-family:'Playfair Display',serif;font-size:clamp(2.2rem,5vw,3.4rem);font-weight:900;color:var(--cream);line-height:1.15;margin-bottom:18px;">Portfólio de <em style="font-style:italic;color:var(--gold-light);">Receitas</em></h1>
+        <p style="color:#B0A090;font-size:1rem;font-weight:300;line-height:1.7;">Criações culinárias desenvolvidas com paixão, técnica e muito sabor pelos nossos alunos.</p>
+    </div>
+</div>
+
+<div class="page-title" style="margin-top:40px;">
+    <h2>🍽️ Todas as Receitas</h2>
+    <a href="/receitasPorCategoria" class="btn btn-secondary">🏷️ Filtrar por Categoria</a>
 </div>
 
 {{#if receitas.length}}
 <div class="receita-grid">
     {{#each receitas}}
-    <div class="card">
-        <h3 style="margin-bottom:8px; color:#c0392b;">{{nome}}</h3>
-        <p style="color:#555; margin-bottom:12px; font-size:0.95rem;">{{descricao}}</p>
-        <div style="margin-bottom:8px;">
-            {{#each Categorias}}
-            <span class="badge">{{nome}}</span>
-            {{/each}}
+    <div class="card" style="padding:0;overflow:hidden;display:flex;flex-direction:column;">
+        <div style="height:130px;background:linear-gradient(135deg,var(--rust-dark),var(--terracotta));display:flex;align-items:center;justify-content:center;font-size:3.5rem;">🍳</div>
+        <div style="padding:22px 24px 24px;flex:1;display:flex;flex-direction:column;gap:10px;">
+            <h3 style="font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:700;color:var(--charcoal);">{{nome}}</h3>
+            <p style="color:var(--gray-text);font-size:0.88rem;line-height:1.6;flex:1;">{{descricao}}</p>
+            <div style="display:flex;flex-wrap:wrap;gap:5px;">
+                {{#each Categorias}}<span class="badge">{{nome}}</span>{{/each}}
+            </div>
+            <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-top:4px;">
+                <span style="font-size:0.8rem;color:var(--gray-text);">
+                    👨‍🍳 {{#each Responsaveis}}{{nome}}{{#unless @last}}, {{/unless}}{{/each}}
+                </span>
+                {{#if linkExterno}}
+                <a href="{{linkExterno}}" target="_blank" class="btn btn-primary" style="font-size:0.8rem;padding:8px 14px;">🔗 Ver receita</a>
+                {{/if}}
+            </div>
         </div>
-        <p style="font-size:0.85rem; color:#888;">
-            👨‍🍳
-            {{#each Responsaveis}}
-            {{nome}}{{#unless @last}}, {{/unless}}
-            {{/each}}
-        </p>
-        {{#if linkExterno}}
-        <br>
-        <a href="{{linkExterno}}" target="_blank" class="btn btn-primary" style="font-size:0.85rem;">🔗 Ver receita completa</a>
-        {{/if}}
     </div>
     {{/each}}
 </div>
 {{else}}
-<div class="card" style="text-align:center; color:#666;">
-    <p>Nenhuma receita cadastrada ainda. Aguarde os alunos adicionarem suas criações!</p>
+<div class="card" style="text-align:center;padding:60px 40px;">
+    <div style="font-size:3rem;margin-bottom:16px;">🍳</div>
+    <h3 style="font-family:'Playfair Display',serif;font-size:1.3rem;color:var(--charcoal);margin-bottom:10px;">Nenhuma receita ainda</h3>
+    <p style="color:var(--gray-text);">Aguarde os alunos adicionarem suas criações!</p>
 </div>
 {{/if}}

@@ -1,11 +1,12 @@
 <div class="page-title">
     <h2>🏷️ Receitas por Categoria</h2>
+    <a href="/receitasPublicas" class="btn btn-secondary">← Todas as Receitas</a>
 </div>
 
-<div class="card" style="margin-bottom:24px;">
-    <form action="/receitasPorCategoria" method="get" style="display:flex; gap:12px; align-items:flex-end; flex-wrap:wrap;">
-        <div class="form-group" style="flex:1; min-width:200px; margin:0;">
-            <label>Escolha uma categoria:</label>
+<div class="card" style="margin-bottom:28px;">
+    <form action="/receitasPorCategoria" method="get">
+        <div class="form-group" style="margin:0;">
+            <label>Escolha uma categoria</label>
             <select name="categoriaId" onchange="this.form.submit()">
                 <option value="">-- Selecione --</option>
                 {{#each Categorias}}
@@ -17,38 +18,40 @@
 </div>
 
 {{#if categoriaSelecionada}}
-<h3 style="margin-bottom:16px;">
-    Receitas em <span style="color:#c0392b;">{{nomeCategoriaSelecionada}}</span>
-    ({{receitas.length}})
+<h3 style="font-family:'Playfair Display',serif;font-size:1.2rem;color:var(--charcoal);margin-bottom:20px;">
+    Receitas em <span style="color:var(--rust);">{{nomeCategoriaSelecionada}}</span>
+    <span style="font-size:0.85rem;color:var(--gray-text);font-family:'DM Sans',sans-serif;font-weight:400;">({{receitas.length}})</span>
 </h3>
 {{/if}}
 
 {{#if receitas.length}}
 <div class="receita-grid">
     {{#each receitas}}
-    <div class="card">
-        <h3 style="margin-bottom:8px; color:#c0392b;">{{nome}}</h3>
-        <p style="color:#555; margin-bottom:12px; font-size:0.95rem;">{{descricao}}</p>
-        <div style="margin-bottom:8px;">
-            {{#each Categorias}}
-            <span class="badge">{{nome}}</span>
-            {{/each}}
+    <div class="card" style="padding:0;overflow:hidden;display:flex;flex-direction:column;">
+        <div style="height:120px;background:linear-gradient(135deg,var(--rust-dark),var(--terracotta));display:flex;align-items:center;justify-content:center;font-size:3rem;">🍳</div>
+        <div style="padding:20px 22px 22px;flex:1;display:flex;flex-direction:column;gap:9px;">
+            <h3 style="font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;color:var(--charcoal);">{{nome}}</h3>
+            <p style="color:var(--gray-text);font-size:0.87rem;line-height:1.6;flex:1;">{{descricao}}</p>
+            <div style="display:flex;flex-wrap:wrap;gap:4px;">
+                {{#each Categorias}}<span class="badge">{{nome}}</span>{{/each}}
+            </div>
+            <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;margin-top:4px;">
+                <span style="font-size:0.8rem;color:var(--gray-text);">
+                    👨‍🍳 {{#each Responsaveis}}{{nome}}{{#unless @last}}, {{/unless}}{{/each}}
+                </span>
+                {{#if linkExterno}}
+                <a href="{{linkExterno}}" target="_blank" class="btn btn-primary" style="font-size:0.8rem;padding:8px 14px;">🔗 Ver receita</a>
+                {{/if}}
+            </div>
         </div>
-        <p style="font-size:0.85rem; color:#888;">
-            👨‍🍳
-            {{#each Responsaveis}}{{nome}}{{#unless @last}}, {{/unless}}{{/each}}
-        </p>
-        {{#if linkExterno}}
-        <br>
-        <a href="{{linkExterno}}" target="_blank" class="btn btn-primary" style="font-size:0.85rem;">🔗 Ver receita</a>
-        {{/if}}
     </div>
     {{/each}}
 </div>
 {{else}}
 {{#if categoriaSelecionada}}
-<div class="card" style="text-align:center; color:#666;">
-    <p>Nenhuma receita nessa categoria ainda.</p>
+<div class="card" style="text-align:center;padding:50px 40px;">
+    <div style="font-size:2.5rem;margin-bottom:12px;">🔍</div>
+    <p style="color:var(--gray-text);">Nenhuma receita nessa categoria ainda.</p>
 </div>
 {{/if}}
 {{/if}}

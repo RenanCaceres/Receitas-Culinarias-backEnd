@@ -4,21 +4,27 @@
 </div>
 <table>
     <thead>
-        <tr>
-            <th>ID</th><th>Nome</th><th>Login</th><th>Tipo</th><th>Ações</th>
-        </tr>
+        <tr><th>ID</th><th>Nome</th><th>Login</th><th>Tipo</th><th>Ações</th></tr>
     </thead>
     <tbody>
         {{#each usuarios}}
         <tr>
-            <td>{{id}}</td>
-            <td>{{nome}}</td>
-            <td>{{login}}</td>
-            <td>{{#eq tipo 1}}Administrador{{else}}Aluno{{/eq}}</td>
+            <td style="color:var(--gray-text);font-size:0.82rem;">{{id}}</td>
+            <td><strong>{{nome}}</strong></td>
+            <td style="color:var(--gray-text);">{{login}}</td>
             <td>
-                <a href="/usuarioUpdate/{{id}}" class="btn btn-secondary">✏️ Editar</a>
-                <a href="/usuarioDelete/{{id}}" class="btn btn-danger"
-                   onclick="return confirm('Excluir usuário {{login}}?')">🗑️ Excluir</a>
+                {{#eq tipo 1}}
+                <span class="badge" style="background:rgba(192,57,43,0.1);color:var(--rust);border-color:rgba(192,57,43,0.25);">Admin</span>
+                {{else}}
+                <span class="badge">Aluno</span>
+                {{/eq}}
+            </td>
+            <td>
+                <div style="display:flex;gap:8px;">
+                    <a href="/usuarioUpdate/{{id}}" class="btn btn-secondary" style="padding:7px 12px;font-size:0.82rem;">✏️ Editar</a>
+                    <a href="/usuarioDelete/{{id}}" class="btn btn-danger" style="padding:7px 12px;font-size:0.82rem;"
+                       onclick="return confirm('Excluir usuário {{login}}?')">🗑️</a>
+                </div>
             </td>
         </tr>
         {{/each}}

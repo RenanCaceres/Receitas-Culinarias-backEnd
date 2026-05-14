@@ -1,19 +1,24 @@
-<div style="max-width:400px; margin: 60px auto;">
-    <div class="card">
-        <h2 style="margin-bottom:20px; text-align:center;">🔐 Login</h2>
+<div style="min-height:calc(100vh - 70px);display:flex;align-items:center;justify-content:center;background:linear-gradient(160deg,var(--cream) 0%,#EDE0D0 100%);margin:-44px -40px -80px;padding:60px 20px;">
+    <div style="background:white;border-radius:24px;padding:48px 44px;width:100%;max-width:430px;box-shadow:0 16px 48px rgba(44,24,16,0.16);border:1px solid var(--border);">
+        <div style="text-align:center;margin-bottom:36px;">
+            <div style="width:64px;height:64px;background:linear-gradient(135deg,var(--rust),var(--terracotta));border-radius:18px;display:flex;align-items:center;justify-content:center;font-size:28px;margin:0 auto 16px;box-shadow:0 8px 24px rgba(192,57,43,0.35);">🍽️</div>
+            <h2 style="font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:700;color:var(--charcoal);">Bem-vindo de volta!</h2>
+            <p style="color:var(--gray-text);font-size:0.88rem;margin-top:6px;">Entre para gerenciar suas receitas</p>
+        </div>
         {{#if erro}}
-        <div class="alert-erro">{{erro}}</div>
+        <div class="alert-erro">⚠️ {{erro}}</div>
         {{/if}}
         <form action="/login" method="post">
             <div class="form-group">
                 <label for="login">Login</label>
-                <input type="text" id="login" name="login" required placeholder="Seu login">
+                <input type="text" id="login" name="login" required placeholder="Seu usuário">
             </div>
             <div class="form-group">
                 <label for="senha">Senha</label>
                 <input type="password" id="senha" name="senha" required placeholder="Sua senha">
             </div>
-            <input type="submit" value="Entrar" class="btn btn-primary" style="width:100%;">
+            <input type="submit" value="Entrar no Sistema" class="btn btn-primary" style="width:100%;justify-content:center;padding:14px;font-size:0.95rem;text-align:center;">
         </form>
+        <p style="text-align:center;margin-top:20px;font-size:0.8rem;color:#aaa;">Acesso restrito a alunos e administradores cadastrados</p>
     </div>
 </div>
