@@ -2,8 +2,13 @@
     <h2>⭐ Minhas Habilidades Culinárias</h2>
 
     <div style="display:flex;gap:10px;">
-        <a href="/relatorioHabilidades" class="btn btn-secondary">📊 Ver Relatório</a>
-        <a href="/home" class="btn btn-secondary">← Voltar</a>
+        <a href="/relatorioHabilidades" class="btn btn-secondary">
+            📊 Ver Relatório
+        </a>
+
+        <a href="/home" class="btn btn-secondary">
+            ← Voltar
+        </a>
     </div>
 </div>
 
@@ -12,65 +17,80 @@
 </p>
 
 <div class="card" style="padding:0;overflow:hidden;">
-    <form action="/minhasHabilidades" method="post">
+
+    <form action="/minhasHabilidades" method="POST">
+
         <table>
             <thead>
                 <tr>
                     <th>Habilidade</th>
-                    <th style="text-align:center;width:160px;">Possuo</th>
-                    <th style="width:200px;">Nível (0–10)</th>
+                    <th style="text-align:center;width:140px;">
+                        Possuo
+                    </th>
+                    <th style="width:180px;">
+                        Nota
+                    </th>
                 </tr>
             </thead>
 
             <tbody>
+
                 {{#each todasHabilidades}}
+
                 <tr>
+
                     <td>
                         <strong>{{nome}}</strong>
                     </td>
 
                     <td style="text-align:center;">
+
                         <input
                             type="checkbox"
                             name="habilidades"
                             value="{{id}}"
                             {{#if selecionada}}checked{{/if}}
-                            onchange="toggleNivel(this, {{id}})"
                         >
+
                     </td>
 
                     <td>
+
                         <input
                             type="number"
                             name="nivel_{{id}}"
-                            id="nivel-{{id}}"
                             min="0"
                             max="10"
                             value="{{nivel}}"
-                            style="width:70px;padding:8px 10px;border:1.5px solid var(--border);border-radius:8px;font-family:'DM Sans',sans-serif;text-align:center;opacity:{{#if selecionada}}1{{else}}0.4{{/if}};"
-                            {{#unless selecionada}}disabled{{/unless}}
+                            style="
+                                width:70px;
+                                padding:8px 10px;
+                                border:1.5px solid var(--border);
+                                border-radius:8px;
+                                font-family:'DM Sans',sans-serif;
+                                text-align:center;
+                            "
                         >
+
                     </td>
+
                 </tr>
+
                 {{/each}}
+
             </tbody>
         </table>
 
         <div style="padding:20px 24px;">
-            <input type="submit" value="💾 Salvar Habilidades" class="btn btn-primary">
+
+            <input
+                type="submit"
+                value="💾 Salvar Habilidades"
+                class="btn btn-primary"
+            >
+
         </div>
+
     </form>
+
 </div>
-
-<script>
-function toggleNivel(checkbox, id) {
-    const nivelInput = document.getElementById('nivel-' + id);
-
-    nivelInput.disabled = !checkbox.checked;
-    nivelInput.style.opacity = checkbox.checked ? '1' : '0.4';
-
-    if (!checkbox.checked) {
-        nivelInput.value = 0;
-    }
-}
-</script>
