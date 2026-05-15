@@ -24,14 +24,7 @@ module.exports = (sequelize, Sequelize) => {
 
         linkExterno: {
             type: Sequelize.STRING, allowNull: true
-        },
-
-        // Mantido apenas para compatibilidade com versões anteriores do projeto.
-        // O relacionamento correto exigido no PDF é N:N em receitaCategoria.
-        categoriaId: {
-            type: Sequelize.INTEGER, allowNull: true
         }
     });
-
     return Receita;
 };
