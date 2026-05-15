@@ -11,7 +11,7 @@ const controllerComentario = require('../controllers/controllerComentario');
 
 const route = express.Router();
 
-// CRIA O BANCO E O ADMIN INICIAL
+// CRIA O BANCO E OS DADOS INICIAIS
 /*
 db.sequelize.sync({ force: false }).then(async () => {
     console.log('Banco criado!');
@@ -24,37 +24,37 @@ db.sequelize.sync({ force: false }).then(async () => {
     });
 
     await db.Usuario.create({
-    login: 'renan',
-    senha: '1234',
-    tipo: 0,
-    nome: 'Aluno'
+        login: 'renan',
+        senha: '1234',
+        tipo: 2,
+        nome: 'Aluno'
     });
 
-        const categoria1 = await db.Categoria.create({
+    await db.Categoria.create({
         nome: 'Massas'
     });
 
-    const categoria2 = await db.Categoria.create({
+    await db.Categoria.create({
         nome: 'Sobremesas'
     });
 
-    const categoria3 = await db.Categoria.create({
+    await db.Categoria.create({
         nome: 'Salgados'
     });
 
-    const habilidade1 = await db.Habilidade.create({
+    await db.Habilidade.create({
         nome: 'Corte de legumes'
     });
 
-    const habilidade2 = await db.Habilidade.create({
+    await db.Habilidade.create({
         nome: 'Preparo de massas'
     });
 
-    const habilidade3 = await db.Habilidade.create({
+    await db.Habilidade.create({
         nome: 'Confeitaria'
     });
 
-    const receita1 = await db.Receita.create({
+    await db.Receita.create({
         nome: 'Macarrão ao Alho e Óleo',
         descricao: 'Receita simples e rápida de macarrão.',
         ingredientes: 'Macarrão, alho, óleo, sal e cheiro-verde.',
@@ -62,7 +62,7 @@ db.sequelize.sync({ force: false }).then(async () => {
         linkExterno: 'https://www.tudogostoso.com.br/'
     });
 
-    const receita2 = await db.Receita.create({
+    await db.Receita.create({
         nome: 'Bolo de Chocolate',
         descricao: 'Bolo simples de chocolate.',
         ingredientes: 'Farinha, açúcar, ovos, leite, chocolate em pó e fermento.',
@@ -70,7 +70,7 @@ db.sequelize.sync({ force: false }).then(async () => {
         linkExterno: 'https://www.tudogostoso.com.br/'
     });
 
-    const receita3 = await db.Receita.create({
+    await db.Receita.create({
         nome: 'Pão de Queijo',
         descricao: 'Receita tradicional de pão de queijo.',
         ingredientes: 'Polvilho, queijo, leite, óleo, ovos e sal.',
@@ -80,7 +80,7 @@ db.sequelize.sync({ force: false }).then(async () => {
 });
 */
 
-// PÁGINA INICIAL DIRETO NAS RECEITAS
+// PÁGINA INICIAL
 route.get('/', (req, res) => {
     res.redirect('/receitasPublicas');
 });

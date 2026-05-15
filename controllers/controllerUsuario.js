@@ -25,7 +25,10 @@ module.exports = {
             res.redirect('/home');
         } catch (err) {
             console.log(err);
-            res.render('usuario/login', { layout: 'noMenu', erro: 'Erro ao fazer login.' });
+            res.render('usuario/login', {
+                layout: 'noMenu',
+                erro: 'Erro ao fazer login.'
+            });
         }
     },
 
@@ -75,7 +78,10 @@ module.exports = {
 
     async postUpdate(req, res) {
         try {
-            await db.Usuario.update(req.body, { where: { id: req.body.id } });
+            await db.Usuario.update(req.body, {
+                where: { id: req.body.id }
+            });
+
             res.redirect('/usuarioList');
         } catch (err) {
             console.log(err);
@@ -85,7 +91,10 @@ module.exports = {
 
     async getDelete(req, res) {
         try {
-            await db.Usuario.destroy({ where: { id: req.params.id } });
+            await db.Usuario.destroy({
+                where: { id: req.params.id }
+            });
+
             res.redirect('/usuarioList');
         } catch (err) {
             console.log(err);
@@ -95,23 +104,29 @@ module.exports = {
 
     async getMinhasHabilidades(req, res) {
         try {
-            const habilidades = await db.Habilidade.findAll({ order: [['nome', 'ASC']] });
+            const habilidades = await db.Habilidade.findAll({
+                order: [['nome', 'ASC']]
+            });
+
             const minhas = await db.AlunoHabilidade.findAll({
                 where: { usuarioId: req.session.alunoId }
             });
 
             const mapa = {};
+
             minhas.forEach(item => {
                 mapa[item.habilidadeId] = item.nivel;
             });
 
-            const todasHabilidades = habilidades.map(h => ({
-                ...h.toJSON(),
-                selecionada: mapa[h.id] !== undefined,
-                nivel: mapa[h.id] !== undefined ? mapa[h.id] : 0
+            const todasHabilidades = habilidades.map(habilidade => ({
+                ...habilidade.toJSON(),
+                selecionada: mapa[habilidade.id] !== undefined,
+                nivel: mapa[habilidade.id] !== undefined ? mapa[habilidade.id] : 0
             }));
 
-            res.render('usuario/minhasHabilidades', { todasHabilidades });
+            res.render('usuario/minhasHabilidades', {
+                todasHabilidades
+            });
         } catch (err) {
             console.log(err);
             res.redirect('/home');
@@ -121,17 +136,26 @@ module.exports = {
     async postSalvarHabilidades(req, res) {
         try {
             const alunoId = req.session.alunoId;
-            const habilidades = req.body.habilidades || {};
-            const niveis = req.body.niveis || {};
 
-            await db.AlunoHabilidade.destroy({ where: { usuarioId: alunoId } });
+            let ids = req.body.habilidades || [];
 
-            const ids = Object.keys(habilidades);
-            const registros = ids.map(id => ({
-                usuarioId: alunoId,
-                habilidadeId: id,
-                nivel: Math.max(0, Math.min(10, Number(niveis[id] || 0)))
-            }));
+            if (!Array.isArray(ids)) {
+                ids = [ids];
+            }
+
+            await db.AlunoHabilidade.destroy({
+                where: { usuarioId: alunoId }
+            });
+
+            const registros = ids.map(id => {
+                const nivelDigitado = Number(req.body[`nivel_${id}`] || 0);
+
+                return {
+                    usuarioId: alunoId,
+                    habilidadeId: Number(id),
+                    nivel: Math.max(0, Math.min(10, nivelDigitado))
+                };
+            });
 
             if (registros.length > 0) {
                 await db.AlunoHabilidade.bulkCreate(registros);

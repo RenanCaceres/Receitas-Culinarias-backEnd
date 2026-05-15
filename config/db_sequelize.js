@@ -53,5 +53,14 @@ db.Usuario.belongsToMany(db.Receita, {
     foreignKey: 'usuarioId',
     as: 'Receitas'
 });
+db.AlunoHabilidade.belongsTo(db.Usuario, {
+    foreignKey: 'usuarioId',
+    as: 'usuario'
+});
+
+db.AlunoHabilidade.belongsTo(db.Habilidade, {
+    foreignKey: 'habilidadeId',
+    as: 'habilidade'
+});
 
 module.exports = db;
